@@ -8,8 +8,8 @@ class Cell {
     color strokeColor;
     Cell(int x, int y, int Width, int Height, color Colour, color strokecolor, boolean IsAlive) {
         position = new PVector(x, y);
-        width = Width;
-        height = Height;
+        width = Width - 2;
+        height = Height - 2;
         colour = Colour;
         strokeColor = strokecolor;
         isAlive = IsAlive;
@@ -24,7 +24,6 @@ class Cell {
     void show() {
         stroke(strokeColor);
         fill(colour);
-        if(isAlive) println("alive", position.x, position.y);
         rect(position.x, position.y, width, height);
     }
 }
