@@ -60,13 +60,11 @@ void mouseClicked() {
 }
 void draw() {
     frameRate(1);
+    if(!started) return;
     if(Alive.size() == 0) {
-        println("loop");
         started = false;
         return;
     }
-    println(Alive)
-    if(!started) return;
     Cell[][] CurrentGrid = new Cell[col][row];
     for(int i = 0; i < col; i++) {
         for(int j = 0; j < row; j++) {
@@ -92,11 +90,13 @@ void draw() {
                     ++alive.suroundedByAlive;
                     continue;
                 }
-                if(CurrentGrid[x][y].suroundedByAlive < 3) continue;
+                println(x, y, CurrentGrid[x][y].suroundedByAlive);
                 if(CurrentGrid[x][y].isAlive) continue;
+                if(CurrentGrid[x][y].suroundedByAlive < 3) continue;
                 CurrentGrid[x][y].isAlive = true;
                 Cell curCell = CurrentGrid[x][y];
-                Cell allCell = new Cell(
+                println(curCell.position.x, curCell.position.y);
+                Cell aliveCell = new Cell(
                     floor(curCell.position.y),
                     floor(curCell.position.x),
                     curCell.width,
@@ -105,17 +105,22 @@ void draw() {
                     color(255),
                     true
                 );
-                NewAlive.add(allCell);
-                allCell.show();
+                NewAlive.add(aliveCell);
+                println(x, y);
+                aliveCell.show();
             }
         }
         if(alive.suroundedByAlive > 4 || alive.suroundedByAlive < 1) {
             int x = floor(alive.position.x / cellWidth);
             int y = floor(alive.position.y / cellHeight);
-            Grid[x][y].show();
+            println("not alive", x, y);
+            CurrentGrid[x][y].isAlive = false;
+            CurrentGrid[x][y].show();
+            continue;
         }
         NewAlive.add(alive);
     }
+    noLoop();
     Grid = CurrentGrid;
     Alive = NewAlive;
 }

@@ -24,6 +24,7 @@ class Cell {
     void show() {
         stroke(strokeColor);
         fill(colour);
+        if(isAlive) println("alive", position.x, position.y);
         rect(position.x, position.y, width, height);
     }
 }
