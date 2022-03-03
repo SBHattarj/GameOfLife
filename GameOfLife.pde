@@ -4,7 +4,7 @@ int cellWidth;
 int cellHeight;
 boolean started = false;
 
-Cell[][] Grid = new Cell[col][col];
+Cell[][] Grid = new Cell[col][row];
 ArrayList<Cell> Alive = new ArrayList<Cell>();
 
 PVector getPoint(PVector point) {
@@ -60,8 +60,19 @@ void mouseClicked() {
 }
 void draw() {
     frameRate(1);
+    if(Alive.size() == 0) {
+        println("loop");
+        started = false;
+        return;
+    }
+    println(Alive)
     if(!started) return;
-    Cell[][] CurrentGrid = Grid;
+    Cell[][] CurrentGrid = new Cell[col][row];
+    for(int i = 0; i < col; i++) {
+        for(int j = 0; j < row; j++) {
+            CurrentGrid[i][j] = new Cell(Grid[i][j]);
+        }
+    }
     ArrayList<Cell> NewAlive = new ArrayList<Cell>();
     for(Cell alive : Alive) {
         alive.show();
@@ -96,7 +107,6 @@ void draw() {
                 );
                 NewAlive.add(allCell);
                 allCell.show();
-                noLoop();
             }
         }
         if(alive.suroundedByAlive > 4 || alive.suroundedByAlive < 1) {

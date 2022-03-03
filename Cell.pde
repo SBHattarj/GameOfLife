@@ -14,7 +14,13 @@ class Cell {
         strokeColor = strokecolor;
         isAlive = IsAlive;
     }
-    
+    Cell(Cell cell) {
+        position = cell.position;
+        width = cell.width;
+        height = cell.height;
+        colour = cell.colour;
+        isAlive = cell.isAlive;
+    }
     void show() {
         stroke(strokeColor);
         fill(colour);
